@@ -8,14 +8,13 @@ class CheckAccessPermission {
 	/**
 	 * The Guard implementation.
 	 *
-	 * @var Guard
+	 * @var \Distilleries\PermissionUtil\Helpers\PermissionUtil
 	 */
 	protected $permission;
 
 	/**
 	 * Create a new filter instance.
 	 *
-	 * @return void
 	 */
 	public function __construct(PermissionUtil $permission)
 	{
@@ -38,5 +37,4 @@ class CheckAccessPermission {
 
 		return $next($request);
 	}
-
 }
