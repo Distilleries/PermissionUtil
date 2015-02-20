@@ -70,14 +70,6 @@ If the user is connected and your model haven't this method the class return tru
 If the user is not connected the permission util return false.
 To disabled the restriction of connected user just go in config file and put false in `auth_restricted`.
 
-If you use multi auth package just provide the good auth you want use:
-
-```php
-    $this->app->bindShared('permission-util', function () {
-            return new PermissionUtil(Auth::administrator());
-    });
-```
-
 You can use the facade to detect if the user can access or not:
 
 Method | Call | Description
