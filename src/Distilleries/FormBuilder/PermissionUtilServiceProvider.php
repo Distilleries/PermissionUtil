@@ -3,7 +3,7 @@
 use Distilleries\FormBuilder\Helpers\PermissionUtil;
 use Illuminate\Support\ServiceProvider;
 
-class FormBuilderServiceProvider extends ServiceProvider {
+class PermissionUtilServiceProvider extends ServiceProvider {
 
 
     protected $package = 'permission-util';
