@@ -2,7 +2,6 @@
 
 use Closure;
 use Distilleries\PermissionUtil\Helpers\PermissionUtil;
-use Illuminate\Http\RedirectResponse;
 
 class CheckAccessPermission {
 
@@ -16,7 +15,6 @@ class CheckAccessPermission {
 	/**
 	 * Create a new filter instance.
 	 *
-	 * @param  Guard  $auth
 	 * @return void
 	 */
 	public function __construct(PermissionUtil $permission)
@@ -34,7 +32,7 @@ class CheckAccessPermission {
 	public function handle($request, Closure $next)
 	{
 
-		if(!$this->permission->hasAccess($request->route()->getActionName())){
+		if (!$this->permission->hasAccess($request->route()->getActionName())) {
 			abort(403, trans('permission-util::errors.unthorized'));
 		}
 
