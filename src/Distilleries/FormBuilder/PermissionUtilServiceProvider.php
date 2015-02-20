@@ -29,7 +29,7 @@ class FormBuilderServiceProvider extends ServiceProvider {
     protected function registerPermissionUtils()
     {
         $this->app->bindShared('permission-util', function($app) {
-            return new PermissionUtil($app['auth'],$app['session'],$app['config']->get($this->package));
+            return new PermissionUtil($app['auth'], $app['session'], $app['config']->get($this->package));
         });
     }
 
@@ -39,7 +39,7 @@ class FormBuilderServiceProvider extends ServiceProvider {
         parent::boot();
 
         $this->publishes([
-            __DIR__.'/../../config/config.php' => config_path( $this->package.'.php')
+            __DIR__.'/../../config/config.php' => config_path($this->package.'.php')
         ]);
     }
 
