@@ -36,5 +36,4 @@ class PermissionUtil implements PermissionUtilContract {
 
         return false;
     }
-
 }
