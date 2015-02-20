@@ -2,7 +2,6 @@
 
 use Distilleries\PermissionUtil\Contracts\PermissionUtilContract;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Session\SessionInterface;
 
 class PermissionUtil implements PermissionUtilContract {
 
