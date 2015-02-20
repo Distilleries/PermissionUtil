@@ -4,12 +4,9 @@
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 
-# Laravel 5 Permisison Util
-
-Based on laravel-form-builder (https://github.com/kristijanhusak/laravel-form-builder). 
-I add default no editable form and few complex form fields.
-I add the validation system directly in the form part.
-
+# Laravel 5 Permission Util
+Package to detect if the have access to an action or not.
+I provide a facade to check from everywhere and a Middleware to restrict directly from the controller.
 
 
 ## Table of contents
