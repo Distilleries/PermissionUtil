@@ -15,7 +15,6 @@ class PermissionUtilServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        parent::register();
         $this->mergeConfigFrom(
             __DIR__.'/../../config/config.php',
             $this->package
