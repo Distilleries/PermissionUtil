@@ -1,6 +1,6 @@
-[![Code quality](http://img.shields.io/scrutinizer/g/distilleries/formbuilder.svg?style=flat)](https://scrutinizer-ci.com/g/distilleries/formbuilder/?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/distilleries/form-builder.svg?style=flat)](https://packagist.org/packages/distilleries/form-builder)
-[![Latest Stable Version](https://img.shields.io/packagist/v/distilleries/form-builder.svg?style=flat)](https://packagist.org/packages/distilleries/form-builder)
+[![Code quality](http://img.shields.io/scrutinizer/g/distilleries/permissionutil.svg?style=flat)](https://scrutinizer-ci.com/g/distilleries/permissionutil/?branch=master)
+[![Total Downloads](https://img.shields.io/packagist/dt/distilleries/permission-util.svg?style=flat)](https://packagist.org/packages/distilleries/permission-util)
+[![Latest Stable Version](https://img.shields.io/packagist/v/distilleries/permission-util.svg?style=flat)](https://packagist.org/packages/distilleries/permission-util)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 
