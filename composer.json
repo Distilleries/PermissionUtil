@@ -1,6 +1,6 @@
 {
   "name": "distilleries/permission-util",
-  "description": "Tools to detect the permissions.",
+  "description": "Provide a system to detect if the user connected have access or not. Provide a middleware to restrict access with a 403",
   "license": "MIT",
   "authors": [
     {
