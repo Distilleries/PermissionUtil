@@ -25,7 +25,7 @@ class PermissionUtil implements PermissionUtilContract {
         if ($this->auth->check()) {
 
             $user = $this->auth->get();
-            $implement = class_implements($user,true);
+            $implement = class_implements($user, true);
 
             if (empty($implement) || empty($implement['Distilleries\PermissionUtil\Contracts\PermissionUtilContract'])) {
                 return true;
