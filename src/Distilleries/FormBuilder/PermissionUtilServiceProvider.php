@@ -35,9 +35,6 @@ class FormBuilderServiceProvider extends ServiceProvider {
 
     public function boot()
     {
-
-        parent::boot();
-
         $this->publishes([
             __DIR__.'/../../config/config.php' => config_path($this->package.'.php')
         ]);
