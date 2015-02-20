@@ -1,4 +1,4 @@
-<?php namespace Distilleries\FormBuilder\Helpers;
+<?php namespace Distilleries\PermissionUtil\Helpers;
 
 use Distilleries\PermissionUtil\Contracts\PermissionUtilContract;
 use Illuminate\Contracts\Auth\Guard;
@@ -8,12 +8,10 @@ class PermissionUtil implements PermissionUtilContract {
 
     protected $auth;
     protected $config;
-    protected $session;
 
-    public function __construct(Guard $auth, SessionInterface $session, array $config = []) {
+    public function __construct(Guard $auth, array $config = []) {
         $this->auth   = $auth;
         $this->config = $config;
-        $this->session = $session;
     }
 
     public function hasAccess($key)

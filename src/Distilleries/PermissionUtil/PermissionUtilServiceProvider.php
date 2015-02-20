@@ -1,6 +1,6 @@
 <?php namespace Distilleries\PermissionUtil;
 
-use Distilleries\FormBuilder\Helpers\PermissionUtil;
+use Distilleries\PermissionUtil\Helpers\PermissionUtil;
 use Illuminate\Support\ServiceProvider;
 
 class PermissionUtilServiceProvider extends ServiceProvider {
@@ -28,12 +28,13 @@ class PermissionUtilServiceProvider extends ServiceProvider {
     protected function registerPermissionUtils()
     {
         $this->app->bindShared('permission-util', function($app) {
-            return new PermissionUtil($app['auth'], $app['session'], $app['config']->get($this->package));
+            return new PermissionUtil($app->make('Illuminate\Contracts\Auth\Guard'), $app['config']->get($this->package));
         });
     }
 
     public function boot()
     {
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang/', $this->package);
         $this->publishes([
             __DIR__.'/../../config/config.php' => config_path($this->package.'.php')
         ]);

@@ -4,14 +4,18 @@
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 
-# Laravel 5 Permission Util
-Package to detect if the have access to an action or not.
-I provide a facade to check from everywhere and a Middleware to restrict directly from the controller.
+# Laravel 5 Permisison Util
+
+Based on laravel-form-builder (https://github.com/kristijanhusak/laravel-form-builder). 
+I add default no editable form and few complex form fields.
+I add the validation system directly in the form part.
+
 
 
 ## Table of contents
 1. [Installation](#installation)
 2. [Basic usage](#basic-usage)
+3. [Middleware](#middleware)
 
 ##Installation
 
@@ -74,4 +78,24 @@ Method | Call | Description
 `hasAccess` | `PermissionUtil::hasAccess('Controller@action')` | Return if the user can access to this action
 
 
- 
+##Middleware
+The package provide a middleware to detect automatically if the user can access to a method of a controller.
+To active it just add on your `app/Http/Kernel`:
+
+```php
+    protected $routeMiddleware = [
+        //...
+		'permission' => 'Distilleries\PermissionUtil\Http\Middleware\CheckAccessPermission',
+	];
+```
+And on your controller or your route add the middleware:
+
+```php
+    public function __construct()
+    {
+        $this->middleware('permission');
+    
+    }
+```
+If the user can access to an action that dispatch a 403
+	
