@@ -1,8 +1,8 @@
 <?php namespace Distilleries\FormBuilder\Helpers;
 
 use Distilleries\PermissionUtil\Contracts\PermissionUtilContract;
-use Illuminate\Auth\AuthManager;
-use Illuminate\Session\SessionManager;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Session\SessionInterface;
 
 class PermissionUtil implements PermissionUtilContract {
 
@@ -10,7 +10,7 @@ class PermissionUtil implements PermissionUtilContract {
     protected $config;
     protected $session;
 
-    public function __construct(AuthManager $auth, SessionManager $session, array $config = []) {
+    public function __construct(Guard $auth, SessionInterface $session, array $config = []) {
         $this->auth   = $auth;
         $this->config = $config;
         $this->session = $session;
