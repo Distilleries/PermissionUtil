@@ -1,0 +1,88 @@
+[![Code quality](http://img.shields.io/scrutinizer/g/distilleries/formbuilder.svg?style=flat)](https://scrutinizer-ci.com/g/distilleries/formbuilder/?branch=master)
+[![Total Downloads](https://img.shields.io/packagist/dt/distilleries/form-builder.svg?style=flat)](https://packagist.org/packages/distilleries/form-builder)
+[![Latest Stable Version](https://img.shields.io/packagist/v/distilleries/form-builder.svg?style=flat)](https://packagist.org/packages/distilleries/form-builder)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
+
+
+# Laravel 5 Permisison Util
+
+Based on laravel-form-builder (https://github.com/kristijanhusak/laravel-form-builder). 
+I add default no editable form and few complex form fields.
+I add the validation system directly in the form part.
+
+
+
+## Table of contents
+1. [Installation](#installation)
+2. [Basic usage](#basic-usage)
+
+##Installation
+
+Add on your composer.json
+
+``` json
+    "require": {
+        "distilleries/permission-util": "1.*",
+    }
+```
+
+run `composer update`.
+
+Add Service provider to `config/app.php`:
+
+``` php
+    'providers' => [
+        // ...
+       'Distilleries\PermissionUtil\PermissionUtilServiceProvider',
+    ]
+```
+
+And Facade (also in `config/app.php`)
+   
+
+``` php
+    'aliases' => [
+        // ...
+        'PermissionUtil'   => 'Distilleries\PermissionUtil\Facades\PermissionUtil',
+    ]
+```
+
+
+Export the configuration:
+
+```ssh
+php artisan vendor:publish --provider="Distilleries\PermissionUtil\PermissionUtilProvider"
+```
+
+###Basic usage
+To check the permission, I use the `auth` of your application.
+On your model use for the Auth implement the interface `Distilleries\PermissionUtil\Contracts\PermissionUtilContract` add the method `hasAccess` to define if the user have access or not.
+The key in param is a string action like  `UserController@getEdit`.
+
+```php
+    public function hasAccess($key)
+    {
+        return true;
+    }
+```
+
+If the user is connected and your model haven't this method the class return true.
+If the user is not connected the permission util return false.
+To disabled the restriction of connected user just go in config file and put false in `auth_restricted`.
+
+If you use multi auth package just provide the good auth you want use:
+
+```php
+    $this->app->bindShared('permission-util', function () {
+            return new PermissionUtil(Auth::administrator());
+    });
+```
+
+You can use the facade to detect if the user can access or not:
+
+Method | Call | Description
+------ | ---- | ------
+`hasAccess` | `PermissionUtil::hasAccess('Controller@action')` | Return if the user can access to this action
+
+
+ 
