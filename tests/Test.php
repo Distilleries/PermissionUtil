@@ -16,60 +16,66 @@ class TestPermissions extends PHPUnit_Framework_TestCase {
         m::close();
     }
 
-    public function testGetPermissionsAuthenticated() {
+    public function testGetPermissionsAuthenticated()
+    {
 
         $guard = m::mock('Illuminate\Contracts\Auth\Guard');
-        $auth = m::mock('Illuminate\Contracts\Auth\Authenticatable');
+        $auth  = m::mock('Illuminate\Contracts\Auth\Authenticatable');
         $guard->shouldReceive('user')->andReturn($auth);
         $guard->shouldReceive('check')->once()->andReturn(true);
-        $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil( $guard , ['auth_restricted'=> true]);
+        $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil($guard, ['auth_restricted' => true]);
         $this->assertTrue($perm->hasAccess("test"));
     }
 
-     public function testGetPermissionsDeniedNotAuthenticated() {
+    public function testGetPermissionsDeniedNotAuthenticated()
+    {
 
-         $guard = m::mock('Illuminate\Contracts\Auth\Guard');
-         $auth = m::mock('Illuminate\Contracts\Auth\Authenticatable');
-         $guard->shouldReceive('user')->andReturn($auth);
-         $guard->shouldReceive('check')->once()->andReturn(false);
+        $guard = m::mock('Illuminate\Contracts\Auth\Guard');
+        $auth  = m::mock('Illuminate\Contracts\Auth\Authenticatable');
+        $guard->shouldReceive('user')->andReturn($auth);
+        $guard->shouldReceive('check')->once()->andReturn(false);
 
-         $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil( $guard , ['auth_restricted'=> true]);
+        $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil($guard, ['auth_restricted' => true]);
 
-         $this->assertFalse($perm->hasAccess("test"));
-     }
+        $this->assertFalse($perm->hasAccess("test"));
+    }
 
-     public function testGetPermissionsAuthenticatedWithImplement() {
+    public function testGetPermissionsAuthenticatedWithImplement()
+    {
 
-         $guard = m::mock('Illuminate\Contracts\Auth\Guard');
-         $auth = m::mock('Distilleries\PermissionUtil\Contracts\PermissionUtilContract');
-         $guard->shouldReceive('user')->andReturn($auth);
-         $guard->shouldReceive('check')->once()->andReturn(true);
+        $guard = m::mock('Illuminate\Contracts\Auth\Guard');
+        $auth  = m::mock('Distilleries\PermissionUtil\Contracts\PermissionUtilContract');
+        $guard->shouldReceive('user')->andReturn($auth);
+        $guard->shouldReceive('check')->once()->andReturn(true);
 
-         $auth->shouldReceive('hasAccess')->andReturn(true);
+        $auth->shouldReceive('hasAccess')->andReturn(true);
 
-         $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil( $guard , ['auth_restricted'=> true]);
+        $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil($guard, ['auth_restricted' => true]);
 
-         $this->assertTrue($perm->hasAccess("test"));
-     }
+        $this->assertTrue($perm->hasAccess("test"));
+    }
 
-     public function testGetPermissionsDeniedAuthenticatedWithImplement() {
+    public function testGetPermissionsDeniedAuthenticatedWithImplement()
+    {
 
-         $guard = m::mock('Illuminate\Contracts\Auth\Guard');
-         $auth = m::mock('Distilleries\PermissionUtil\Contracts\PermissionUtilContract');
-         $guard->shouldReceive('user')->andReturn($auth);
-         $guard->shouldReceive('check')->once()->andReturn(false);
+        $guard = m::mock('Illuminate\Contracts\Auth\Guard');
+        $auth  = m::mock('Distilleries\PermissionUtil\Contracts\PermissionUtilContract');
+        $guard->shouldReceive('user')->andReturn($auth);
+        $guard->shouldReceive('check')->once()->andReturn(false);
 
-         $auth->shouldReceive('hasAccess')->andReturn(false);
+        $auth->shouldReceive('hasAccess')->andReturn(false);
 
-         $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil( $guard , ['auth_restricted'=> true]);
+        $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil($guard, ['auth_restricted' => true]);
 
-         $this->assertFalse($perm->hasAccess("test"));
-     }
+        $this->assertFalse($perm->hasAccess("test"));
+    }
 
-    public function testMiddlewareCheckAccessPermission(){
+    public function testMiddlewareCheckAccessPermission()
+    {
 
         $perm = m::mock('Distilleries\PermissionUtil\Contracts\PermissionUtil');
-        $perm->shouldReceive('hasAccess')->andReturnUsing(function($slug){
+        $perm->shouldReceive('hasAccess')->andReturnUsing(function ($slug)
+        {
             return $slug == 'test';
         });
 
@@ -89,7 +95,8 @@ class TestPermissions extends PHPUnit_Framework_TestCase {
         $http = m::mock('Illuminate\Http\Request');
         $http->shouldReceive('route')->andReturn($route);
 
-        $this->assertEquals(1, $check->handle($http, function(){
+        $this->assertEquals(1, $check->handle($http, function ()
+        {
             return 1;
         }));
 
@@ -98,19 +105,19 @@ class TestPermissions extends PHPUnit_Framework_TestCase {
 
         $http = m::mock('Illuminate\Http\Request');
         $http->shouldReceive('route')->andReturn($route);
-        try {
-            $result = $check->handle($http, function(){
+        try
+        {
+            $check->handle($http, function ()
+            {
                 return 1;
             });
-        }
-        catch (\Exception $expected) {
+        } catch (\Exception $expected)
+        {
             return;
         }
 
 
         $this->fail('Exception');
 
-
     }
 }
- 
