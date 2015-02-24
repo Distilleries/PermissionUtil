@@ -1,9 +1,12 @@
 <?php namespace Distilleries\PermissionUtil\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Container\Container;
+use Illuminate\Http\Request;
 
 class CheckAccessPermission {
 
+    protected $app;
 	/**
 	 * The Guard implementation.
 	 *
@@ -15,23 +18,23 @@ class CheckAccessPermission {
 	 * Create a new filter instance.
 	 *
 	 */
-	public function __construct()
+	public function __construct(Container $app)
 	{
-		$this->permission = app('permission-util');
+        $this->app = $app;
+		$this->permission = $app->make('permission-util');
 	}
-
 	/**
 	 * Handle an incoming request.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  Illuminate\Http\Request\  $request
 	 * @param  \Closure  $next
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next)
+	public function handle(Request $request, Closure $next)
 	{
 
 		if (!$this->permission->hasAccess($request->route()->getActionName())) {
-			abort(403, trans('permission-util::errors.unthorized'));
+			$this->app->abort(403, $this->app->make('translator')->trans('permission-util::errors.unthorized'));
 		}
 
 		return $next($request);
