@@ -1,7 +1,6 @@
 <?php namespace Distilleries\PermissionUtil\Http\Middleware;
 
 use Closure;
-use Distilleries\PermissionUtil\Helpers\PermissionUtil;
 
 class CheckAccessPermission {
 
@@ -16,9 +15,9 @@ class CheckAccessPermission {
 	 * Create a new filter instance.
 	 *
 	 */
-	public function __construct(PermissionUtil $permission)
+	public function __construct()
 	{
-		$this->permission = $permission;
+		$this->permission = app('permission-util');
 	}
 
 	/**
