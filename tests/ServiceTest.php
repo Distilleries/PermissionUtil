@@ -8,7 +8,7 @@
 
 use \Mockery as m;
 
-class ServiceTest extends PHPUnit_Framework_TestCase{
+class ServiceTest extends \Orchestra\Testbench\TestCase{
 
 
     public function tearDown()
@@ -16,16 +16,25 @@ class ServiceTest extends PHPUnit_Framework_TestCase{
         parent::tearDown();
         m::close();
     }
+    protected function getPackageProviders()
+    {
+        return array('Distilleries\PermissionUtil\PermissionUtilServiceProvider');
+    }
 
-    public function testService(){
+    protected function getPackageAliases()
+    {
+        return [
+            'Perm' => 'Distilleries\PermissionUtil\Facades\PermissionUtil'
+        ];
+    }
+    public function testService()
+    {
 
-        $app = m::mock('\Illuminate\Contracts\Foundation\Application');
+        $service = $this->app->getProvider('Distilleries\PermissionUtil\PermissionUtilServiceProvider');
+        $facades = $service->provides();
+        $this->assertTrue([ 'permission-util' ] == $facades);
 
-        $result = new \Distilleries\PermissionUtil\PermissionUtilServiceProvider($app);
-
-        $facades = $result->provides();
-        $fac = \Distilleries\PermissionUtil\Facades\PermissionUtil::getFacadeAccessor();
-
-        $this->assertTrue(in_array($fac, $facades));
+        $service->boot();
+        $service->register();
     }
 } 

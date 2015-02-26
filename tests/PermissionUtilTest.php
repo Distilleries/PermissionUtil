@@ -8,16 +8,27 @@
 
 use \Mockery as m;
 
-class PermissionUtilTest extends PHPUnit_Framework_TestCase {
+class PermissionUtilTest extends \Orchestra\Testbench\TestCase {
 
 
     protected $guard;
     protected $auth;
 
-    public function setUp(){
+    public function setUp()
+    {
+        parent::setUp();
+    }
 
-        $this->guard = m::mock('Illuminate\Contracts\Auth\Guard');
-        $this->auth  = m::mock('Illuminate\Contracts\Auth\Authenticatable');
+    protected function getPackageProviders()
+    {
+        return [ 'Distilleries\PermissionUtil\PermissionUtilServiceProvider' ];
+    }
+
+    protected function getPackageAliases()
+    {
+        return [
+            'Perm' => 'Distilleries\PermissionUtil\Facades\PermissionUtil'
+        ];
     }
 
     public function tearDown()
@@ -26,66 +37,56 @@ class PermissionUtilTest extends PHPUnit_Framework_TestCase {
         m::close();
     }
 
-    public function testGetPermissionsAuthenticated()
+    public function testGetPermissionsNoConfig()
     {
-        $this->guard->shouldReceive('user')->andReturn($this->auth);
-        $this->guard->shouldReceive('check')->once()->andReturn(true);
-        $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil($this->guard, ['auth_restricted' => true]);
-        $this->assertTrue($perm->hasAccess("test"));
+        $this->refreshApplication();
+        $this->app['config']->set('permission-util', []);
+        $this->assertTrue(Perm::hasAccess(null));
     }
 
     public function testGetPermissionsDeniedNotAuthenticated()
     {
-        $this->guard->shouldReceive('user')->andReturn($this->auth);
-        $this->guard->shouldReceive('check')->once()->andReturn(false);
+        $this->refreshApplication();
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertFalse(Perm::hasAccess("test"));
+    }
 
-        $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil($this->guard, ['auth_restricted' => true]);
-
-        $this->assertFalse($perm->hasAccess("test"));
+    public function testGetPermissionsAuthenticated()
+    {
+        $this->refreshApplication();
+        $user = new User(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertTrue(Perm::hasAccess("diff"));
     }
 
     public function testGetPermissionsAuthenticatedWithImplement()
     {
-        $this->guard->shouldReceive('user')->andReturn($this->auth);
-        $this->guard->shouldReceive('check')->once()->andReturn(true);
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
 
-        $this->auth->shouldReceive('hasAccess')->andReturn(true);
-
-        $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil($this->guard, ['auth_restricted' => true]);
-
-        $this->assertTrue($perm->hasAccess("test"));
+        $this->assertTrue(Perm::hasAccess("test"));
     }
 
     public function testGetPermissionsDeniedAuthenticatedWithImplement()
     {
-        $this->guard->shouldReceive('user')->andReturn($this->auth);
-        $this->guard->shouldReceive('check')->once()->andReturn(false);
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
 
-        $this->auth->shouldReceive('hasAccess')->andReturn(false);
-
-        $perm = new \Distilleries\PermissionUtil\Helpers\PermissionUtil($this->guard, ['auth_restricted' => true]);
-
-        $this->assertFalse($perm->hasAccess("test"));
+        $this->assertFalse(Perm::hasAccess("diff"));
     }
 
     public function testMiddlewareCheckAccessPermission()
     {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
 
-        $perm = m::mock('Distilleries\PermissionUtil\Contracts\PermissionUtil');
-        $perm->shouldReceive('hasAccess')->andReturnUsing(function ($slug)
-        {
-            return $slug == 'test';
-        });
-
-        $tr = m::mock();
-        $tr->shouldReceive('trans')->andReturn('');
-
-        $app = m::mock('Illuminate\Contracts\Container\Container');
-        $app->shouldReceive('make')->with('permission-util')->andReturn($perm);
-        $app->shouldReceive('make')->with('translator')->andReturn($tr);
-        $app->shouldReceive('abort')->andThrow(new \Exception());
-
-        $check = new \Distilleries\PermissionUtil\Http\Middleware\CheckAccessPermission($app);
+        $check = new \Distilleries\PermissionUtil\Http\Middleware\CheckAccessPermission($this->app);
 
         $route = m::mock();
         $route->shouldReceive('getActionName')->andReturn('test');
@@ -120,3 +121,70 @@ class PermissionUtilTest extends PHPUnit_Framework_TestCase {
     }
 
 }
+
+
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use \Distilleries\PermissionUtil\Contracts\PermissionUtilContract;
+
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
+
+    use Authenticatable, CanResetPassword;
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'email', 'password'];
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
+
+}
+
+class UserImplement extends Model implements AuthenticatableContract, CanResetPasswordContract, PermissionUtilContract {
+
+    use Authenticatable, CanResetPassword;
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'email', 'password'];
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
+
+    public function hasAccess($key){
+        return $key == "test";
+    }
+}
+
+

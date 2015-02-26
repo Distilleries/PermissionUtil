@@ -46,6 +46,6 @@ class PermissionUtilServiceProvider extends ServiceProvider {
      */
     public function provides()
     {
-        return [ $this->package ];
+        return [ 'permission-util' ];
     }
 }

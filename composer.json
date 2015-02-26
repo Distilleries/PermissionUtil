@@ -1,31 +1,29 @@
 {
-  "name": "distilleries/permission-util",
-  "description": "Provide a system to detect if the user connected have access or not. Provide a middleware to restrict access with a 403",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Maxime Francois",
-      "email": "kezho@me.com"
-    }
-  ],
-  "minimum-stability": "stable",
-  "require": {
-    "php": ">=5.5.0",
-    "illuminate/support": "5.*",
-    "illuminate/contracts": "5.*",
-    "illuminate/session": "5.*",
-    "illuminate/http": "5.*"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "~4.5",
-    "mockery/mockery": "0.9.*",
-    "phpunit/php-code-coverage": "~2.0"
-  },
-  "autoload": {
-    "classmap": [
+    "name": "distilleries/permission-util",
+    "description": "Provide a system to detect if the user connected have access or not. Provide a middleware to restrict access with a 403",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maxime Francois",
+            "email": "kezho@me.com"
+        }
     ],
-    "psr-4": {
-      "Distilleries\\PermissionUtil\\": "src/Distilleries/PermissionUtil"
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.5.0",
+        "illuminate/support": "5.0.*",
+        "illuminate/session": "5.0.*",
+        "illuminate/http": "5.0.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.0.*",
+        "phpunit/phpunit": "~4.5",
+        "mockery/mockery": "0.9.*"
+    },
+    "autoload": {
+        "classmap": [],
+        "psr-4": {
+            "Distilleries\\PermissionUtil\\": "src/Distilleries/PermissionUtil"
+        }
     }
-  }
 }
