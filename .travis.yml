@@ -4,11 +4,6 @@ php:
   - 5.5
   - 5.6
   - hhvm
-  
-install:
-  - cat /etc/hhvm/php.ini
-  - echo hhvm.enable_zend_compat=true | sudo tee -a
-  - echo extension=gettext.so | sudo tee -a
 
 before_script:
   - travis_retry composer self-update

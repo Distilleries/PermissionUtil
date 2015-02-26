@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'unthorized'=>_('Unauthorized action.')
+    'unthorized'=> 'Unauthorized action.'
 ];
