@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/Distilleries/PermissionUtil.svg?branch=master)](https://travis-ci.org/Distilleries/PermissionUtil)
 [![Code quality](http://img.shields.io/scrutinizer/g/distilleries/permissionutil.svg?style=flat)](https://scrutinizer-ci.com/g/distilleries/permissionutil/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Distilleries/PermissionUtil/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Distilleries/PermissionUtil/?branch=master)
+[![Build Status](https://travis-ci.org/Distilleries/PermissionUtil.svg?branch=master)](https://travis-ci.org/Distilleries/PermissionUtil)
 [![Total Downloads](https://img.shields.io/packagist/dt/distilleries/permission-util.svg?style=flat)](https://packagist.org/packages/distilleries/permission-util)
 [![Latest Stable Version](https://img.shields.io/packagist/v/distilleries/permission-util.svg?style=flat)](https://packagist.org/packages/distilleries/permission-util)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
