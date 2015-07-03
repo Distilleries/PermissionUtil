@@ -11,12 +11,12 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "5.0.*",
-        "illuminate/session": "5.0.*",
-        "illuminate/http": "5.0.*"
+        "illuminate/support": "5.1.*",
+        "illuminate/session": "5.1.*",
+        "illuminate/http": "5.1.*"
     },
     "require-dev": {
-        "orchestra/testbench": "3.0.*",
+        "orchestra/testbench": "3.1.*",
         "phpunit/phpunit": "~4.5",
         "mockery/mockery": "0.9.*"
     },
