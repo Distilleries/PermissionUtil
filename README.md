@@ -1,9 +1,10 @@
-[![Code quality](http://img.shields.io/scrutinizer/g/distilleries/permissionutil.svg?style=flat)](https://scrutinizer-ci.com/g/distilleries/permissionutil/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Distilleries/PermissionUtil/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Distilleries/PermissionUtil/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Distilleries/PermissionUtil/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Distilleries/PermissionUtil/?branch=master)
 [![Build Status](https://travis-ci.org/Distilleries/PermissionUtil.svg?branch=master)](https://travis-ci.org/Distilleries/PermissionUtil)
-[![Total Downloads](https://img.shields.io/packagist/dt/distilleries/permission-util.svg?style=flat)](https://packagist.org/packages/distilleries/permission-util)
-[![Latest Stable Version](https://img.shields.io/packagist/v/distilleries/permission-util.svg?style=flat)](https://packagist.org/packages/distilleries/permission-util)
+[![Total Downloads](https://poser.pugx.org/distilleries/permission-util/downloads)](https://packagist.org/packages/distilleries/permission-util)
+[![Latest Stable Version](https://poser.pugx.org/distilleries/permission-util/version)](https://packagist.org/packages/distilleries/permission-util)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
+
 
 
 # Laravel 5 Permission Util
