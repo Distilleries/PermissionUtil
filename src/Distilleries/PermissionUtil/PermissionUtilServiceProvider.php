@@ -27,7 +27,7 @@ class PermissionUtilServiceProvider extends ServiceProvider {
 
     protected function registerPermissionUtils()
     {
-        $this->app->bindShared('permission-util', function($app) {
+        $this->app->singleton('permission-util', function($app) {
             return new PermissionUtil($app->make('Illuminate\Contracts\Auth\Guard'), $app['config']->get($this->package));
         });
     }
