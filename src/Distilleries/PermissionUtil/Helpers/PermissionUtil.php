@@ -44,7 +44,7 @@ class PermissionUtil implements PermissionUtilContract {
     public function hasAccessArray($arrayKeys, $isAndRelation = false, $child = null) {
         $hasAccess = null;
         foreach ($arrayKeys as $key) {
-            if ($hasAccess == null) {
+            if ($hasAccess === null) {
                 $hasAccess = $this->hasAccess(($child == null ? $key : $key[$child]));
             } else {
                 if ($isAndRelation) {
@@ -55,6 +55,6 @@ class PermissionUtil implements PermissionUtilContract {
                 }
             }
         }
-        return $hasAccess;
+        return $hasAccess != null ?: false;
     }
 }
