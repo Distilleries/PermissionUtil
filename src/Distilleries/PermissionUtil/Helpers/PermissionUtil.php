@@ -33,4 +33,28 @@ class PermissionUtil implements PermissionUtilContract {
 
         return false;
     }
+
+    /*
+     * Checks each elements of the array if the access is granted
+     * @param  Array $arrayKeys
+     * @param  Boolean $isAndRelation: if true its a AND relation check, if false a OR relation
+     * @param  String $child: if set, the hasAccess method will be called using element[$child] instead of the array's element itself
+     * @return boolean
+     */
+    public function hasAccessArray($arrayKeys, $isAndRelation = false, $child = null) {
+        $hasAccess = null;
+        foreach ($arrayKeys as $key) {
+            if ($hasAccess === null) {
+                $hasAccess = $this->hasAccess(($child == null ? $key : $key[$child]));
+            } else {
+                if ($isAndRelation) {
+                    $hasAccess = $hasAccess && $this->hasAccess(($child == null ? $key : $key[$child]));
+                    if (!$hasAccess) break;
+                } else {
+                    $hasAccess = $hasAccess || $this->hasAccess(($child == null ? $key : $key[$child]));
+                }
+            }
+        }
+        return $hasAccess != null ?: false;
+    }
 }

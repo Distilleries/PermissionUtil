@@ -80,6 +80,86 @@ class PermissionUtilTest extends \Orchestra\Testbench\TestCase {
         $this->assertFalse(Perm::hasAccess("diff"));
     }
 
+    public function testGetPermissionsArrayEmpty()
+    {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->assertFalse(Perm::hasAccessArray([]));
+    }
+
+    public function testGetPermissionsArrayAuthenticatedWithImplement()
+    {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertFalse(Perm::hasAccessArray(['diff']));
+    }
+
+    public function testGetPermissionsArrayMultiple()
+    {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertTrue(Perm::hasAccessArray(['diff', 'test']));
+    }
+
+    public function testGetPermissionsArrayMultipleAnd()
+    {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertFalse(Perm::hasAccessArray(['diff', 'test'], true));
+    }
+
+    public function testGetPermissionsArrayMultipleAndReverse()
+    {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertFalse(Perm::hasAccessArray(['test', 'diff'], true));
+    }
+
+    public function testGetPermissionsArrayMultipleOr()
+    {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertFalse(Perm::hasAccessArray(['diff', 'diff'], false));
+    }
+
+    public function testGetPermissionsArrayMultipleOrAuthenticated()
+    {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertTrue(Perm::hasAccessArray(['diff', 'test'], false));
+    }
+
+    public function testGetPermissionsArrayMultipleOrWithChild()
+    {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertTrue(Perm::hasAccessArray([[ 'child' => 'test']], false, 'child'));
+    }
+
+    public function testGetPermissionsArrayMultipleAndWithChild()
+    {
+        $this->refreshApplication();
+        $user = new UserImplement(['name' => 'John']);
+        $this->be($user);
+        $this->app['config']->set('permission-util', ['auth_restricted' => true]);
+        $this->assertFalse(Perm::hasAccessArray([[ 'child' => 'test'], [ 'child' => 'diff']], true, 'child'));
+    }
+
     public function testMiddlewareCheckAccessPermission()
     {
         $this->refreshApplication();
