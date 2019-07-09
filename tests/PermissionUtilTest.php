@@ -14,7 +14,7 @@ class PermissionUtilTest extends \Orchestra\Testbench\TestCase {
     protected $guard;
     protected $auth;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -31,7 +31,7 @@ class PermissionUtilTest extends \Orchestra\Testbench\TestCase {
         ];
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         m::close();
