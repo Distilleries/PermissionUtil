@@ -12,18 +12,18 @@ class ServiceTest extends \Orchestra\Testbench\BrowserKit\TestCase
 {
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         m::close();
     }
 
-    protected function getPackageProviders()
+    protected function getPackageProviders($app)
     {
         return ['Distilleries\PermissionUtil\PermissionUtilServiceProvider'];
     }
 
-    protected function getPackageAliases()
+    protected function getPackageAliases($app)
     {
         return [
             'Perm' => 'Distilleries\PermissionUtil\Facades\PermissionUtil'
